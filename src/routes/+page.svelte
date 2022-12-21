@@ -36,10 +36,19 @@
 
   let modalContent = {};
 
+  const showModal = () => {
+    const myModal = new bootstrap.Modal("#exampleModal")
+    myModal.show();
+	}
+
   const handleOpenPresent = (day) => {
     const thisPresent = presents.map(item => {
       if(item.day === day) {
         item.status = 1;
+
+        setTimeout(() => {
+          showModal();
+				}, 200)
       }
 
       return item
@@ -52,8 +61,7 @@
   const handleModal = (day) => {
     modalContent = presents.find(item => item.day === day);
 
-    const myModal = new bootstrap.Modal("#exampleModal")
-    myModal.show();
+    showModal();
   }
 
   const updateStorage = () => {
@@ -79,7 +87,7 @@
 
 {#if isPageReady}
 	<div class="custom-container">
-		<h1>Merry Christmas</h1>
+		<h1>❄ Merry Christmas, TV ❄</h1>
 
 		<div class="grid" transition:fade="{{duration: 300}}">
 			{#each presents as present}
@@ -100,6 +108,8 @@
 				</div>
 			{/each}
 		</div>
+
+		<p class="text-center">Love, Squid</p>
 	</div>
 {:else}
 	<div class="super-loader">
@@ -128,6 +138,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 <style>
@@ -163,7 +174,7 @@
     .btn-present {
         position: relative;
 				display: flex;
-				height: 125px;
+				height: 100px;
 				align-items: center;
 				justify-content: center;
 				color: #fff;

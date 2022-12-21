@@ -34,7 +34,7 @@
     {day: "25", url: "", status: 0},
   ]
 
-	let modalContent = {};
+  let modalContent = {};
 
   const handleOpenPresent = (day) => {
     const thisPresent = presents.map(item => {
@@ -53,8 +53,8 @@
     modalContent = presents.find(item => item.day === day);
 
     const myModal = new bootstrap.Modal("#exampleModal")
-		myModal.show();
-	}
+    myModal.show();
+  }
 
   const updateStorage = () => {
     localStorage.setItem(storageKeyName, JSON.stringify(presents))
@@ -78,27 +78,28 @@
 
 
 {#if isPageReady}
-	<div class="container">
-	<div class="grid" transition:fade="{{duration: 300}}">
-		{#each presents as present}
-			<div class="present">
-				<!--<h1>Day {present.day}</h1>-->
+	<div class="custom-container">
+		<h1>Merry Christmas</h1>
 
-				{#if present.status === 0}
-					<button class="btn btn-present" on:click={() => {handleOpenPresent(present.day)}}>
-						<img src="/present.png" alt="A present!" class="img-fluid" />
-					</button>
-				{/if}
+		<div class="grid" transition:fade="{{duration: 300}}">
+			{#each presents as present}
+				<div class="present">
+					{#if present.status === 0}
+						<button class="btn btn-present" on:click={() => {handleOpenPresent(present.day)}}>
+							<h2>Day {present.day}</h2>
+						</button>
+					{/if}
 
-				{#if present.status === 1}
-					<button class="btn btn-present" on:click={() => {handleModal(present.day)}}>
-						<img src="/present-open.png" alt="A present!" class="img-fluid btn-present-open" />
-						<img src="https://i.giphy.com/media/IzXVviFZfeudTMxmOx/giphy.webp" alt="gif" class="img-fluid gift-gif" />
-					</button>
-				{/if}
-			</div>
-		{/each}
-	</div>
+					{#if present.status === 1}
+						<button class="btn btn-present" on:click={() => {handleModal(present.day)}}>
+							<span class="d-block">
+								<img src="https://i.giphy.com/media/IzXVviFZfeudTMxmOx/giphy.webp" alt="gif" class="img-fluid gift-gif" />
+							</span>
+						</button>
+					{/if}
+				</div>
+			{/each}
+		</div>
 	</div>
 {:else}
 	<div class="super-loader">
@@ -130,12 +131,19 @@
 
 
 <style>
+		.custom-container {
+				text-align: center;
+				max-width: 100%;
+				padding: 24px 0;
+		}
+
     .modal {
         --bs-modal-bg: #222;
         --bs-modal-border-color: transparent;
         --bs-modal-header-border-color: transparent;
         --bs-modal-footer-border-color: transparent;
-		}
+    }
+
     .super-loader {
         width: 100vw;
         height: 100vh;
@@ -143,47 +151,44 @@
         align-items: center;
         justify-content: center;
     }
+
     .grid {
         padding: 12px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(5, 1fr);
+				grid-gap: 24px;
     }
 
-    .present {
+    .btn-present {
         position: relative;
+				display: flex;
+				height: 125px;
+				align-items: center;
+				justify-content: center;
+				color: #fff;
+				border: 1px solid #fff;
+				width: 100%;
+        overflow: hidden;
     }
 
-    .present h1 {
-        position: absolute;
-        top: 0;
-        left: 0;
-				z-index: 2;
-				background-color: red;
-				padding: 4px 12px;
-				line-height: 1em;
-				font-weight: 700;
-				border-radius: 4px;
-    }
-
-    .present:nth-of-type(even) h1 {
-        background-color: green;
+		.present h2 {
+				color: #fff;
 		}
 
-		.btn-present {
-				position: relative;
-		}
-
-    .btn-present-open {
-        position: relative;
-				z-index: 0;
+    .btn-present img {
+        display: block;
     }
 
-		.gift-gif {
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: 4;
-				padding: 48px;
+		@media screen and (min-width: 800px) {
+        .custom-container {
+            max-width: 75vw;
+        }
+		}
+
+		@media screen and (min-width: 1200px) {
+        .custom-container {
+            max-width: 50vw;
+        }
 		}
 </style>

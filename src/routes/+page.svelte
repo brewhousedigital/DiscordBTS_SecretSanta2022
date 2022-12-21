@@ -112,7 +112,7 @@
 			{/each}
 		</div>
 
-		<p class="text-center">Love, Squid</p>
+		<p class="text-center" style="font-size: 24px;">Love, Squid</p>
 	</div>
 {:else}
 	<div class="super-loader">

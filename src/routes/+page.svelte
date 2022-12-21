@@ -1,37 +1,38 @@
 <script>
   import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
+  import Present from "../lib/components/Present.svelte";
 
   const storageKeyName = "presents";
 
   let isPageReady = false;
 
   let presents = [
-    {day: "1", url: "", status: 0},
-    {day: "2", url: "", status: 0},
-    {day: "3", url: "", status: 0},
-    {day: "4", url: "", status: 0},
-    {day: "5", url: "", status: 0},
-    {day: "6", url: "", status: 0},
-    {day: "7", url: "", status: 0},
-    {day: "8", url: "", status: 0},
-    {day: "9", url: "", status: 0},
-    {day: "10", url: "", status: 0},
-    {day: "11", url: "", status: 0},
-    {day: "12", url: "", status: 0},
-    {day: "13", url: "", status: 0},
-    {day: "14", url: "", status: 0},
-    {day: "15", url: "", status: 0},
-    {day: "16", url: "", status: 0},
-    {day: "17", url: "", status: 0},
-    {day: "18", url: "", status: 0},
-    {day: "19", url: "", status: 0},
-    {day: "20", url: "", status: 0},
-    {day: "21", url: "", status: 0},
-    {day: "22", url: "", status: 0},
-    {day: "23", url: "", status: 0},
-    {day: "24", url: "", status: 0},
-    {day: "25", url: "", status: 0},
+    {day: "1", type: "jpeg", status: 0},
+    {day: "2", type: "gif", status: 0},
+    {day: "3", type: "jpeg", status: 0},
+    {day: "4", type: "gif", status: 0},
+    {day: "5", type: "jpeg", status: 0},
+    {day: "6", type: "jpeg", status: 0},
+    {day: "7", type: "mp4", status: 0},
+    {day: "8", type: "jpeg", status: 0},
+    {day: "9", type: "jpeg", status: 0},
+    {day: "10", type: "png", status: 0},
+    {day: "11", type: "gif", status: 0},
+    {day: "12", type: "jpeg", status: 0},
+    {day: "13", type: "mp4", status: 0},
+    {day: "14", type: "jpeg", status: 0},
+    {day: "15", type: "gif", status: 0},
+    {day: "16", type: "mp4", status: 0},
+    {day: "17", type: "jpeg", status: 0},
+    {day: "18", type: "png", status: 0},
+    {day: "19", type: "jpeg", status: 0},
+    {day: "20", type: "jpeg", status: 0},
+    {day: "21", type: "gif", status: 0},
+    {day: "22", type: "gif", status: 0},
+    {day: "23", type: "mp4", status: 0},
+    {day: "24", type: "gif", status: 0},
+    {day: "25", type: "mp4", status: 0},
   ]
 
   let modalContent = {};
@@ -39,7 +40,7 @@
   const showModal = () => {
     const myModal = new bootstrap.Modal("#exampleModal")
     myModal.show();
-	}
+  }
 
   const handleOpenPresent = (day) => {
     const thisPresent = presents.map(item => {
@@ -47,8 +48,9 @@
         item.status = 1;
 
         setTimeout(() => {
+          modalContent = item;
           showModal();
-				}, 200)
+        }, 200)
       }
 
       return item
@@ -60,6 +62,7 @@
 
   const handleModal = (day) => {
     modalContent = presents.find(item => item.day === day);
+    console.log(">>>modalContent", modalContent)
 
     showModal();
   }
@@ -101,7 +104,7 @@
 					{#if present.status === 1}
 						<button class="btn btn-present" on:click={() => {handleModal(present.day)}}>
 							<span class="d-block">
-								<img src="https://i.giphy.com/media/IzXVviFZfeudTMxmOx/giphy.webp" alt="gif" class="img-fluid gift-gif" />
+								<Present {present} />
 							</span>
 						</button>
 					{/if}
@@ -121,17 +124,17 @@
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<!--<h1 class="modal-title fs-5" id="exampleModalLabel">Day {modalContent?.day}</h1>-->
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
+
 			<div class="modal-body">
-				<!--<img src={modalContent?.url} alt="BTS gif" class="img-fluid" />-->
-				<img src="https://i.giphy.com/media/IzXVviFZfeudTMxmOx/giphy.webp" alt="gif" class="img-fluid" />
+				<Present present={modalContent} />
 			</div>
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			</div>
@@ -142,11 +145,11 @@
 
 
 <style>
-		.custom-container {
-				text-align: center;
-				max-width: 100%;
-				padding: 24px 0;
-		}
+    .custom-container {
+        text-align: center;
+        max-width: 100%;
+        padding: 24px 0;
+    }
 
     .modal {
         --bs-modal-bg: #222;
@@ -168,38 +171,38 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(5, 1fr);
-				grid-gap: 24px;
+        grid-gap: 24px;
     }
 
     .btn-present {
         position: relative;
-				display: flex;
-				height: 100px;
-				align-items: center;
-				justify-content: center;
-				color: #fff;
-				border: 1px solid #fff;
-				width: 100%;
+        display: flex;
+        height: 100px;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border: 1px solid #fff;
+        width: 100%;
         overflow: hidden;
     }
 
-		.present h2 {
-				color: #fff;
-		}
+    .present h2 {
+        color: #fff;
+    }
 
     .btn-present img {
         display: block;
     }
 
-		@media screen and (min-width: 800px) {
+    @media screen and (min-width: 800px) {
         .custom-container {
             max-width: 75vw;
         }
-		}
+    }
 
-		@media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1200px) {
         .custom-container {
             max-width: 50vw;
         }
-		}
+    }
 </style>
